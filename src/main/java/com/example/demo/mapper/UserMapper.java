@@ -6,6 +6,8 @@ import com.example.demo.dto.UserResponse;
 import com.example.demo.model.User;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class UserMapper {
     private final NoteMapper mapper;
@@ -30,6 +32,10 @@ public class UserMapper {
         response.setNotas(mapper.toResponseList(dados.getNotes()));
 
         return response;
+    }
+
+    public List<UserResponse> toResponseList(List<User> users){
+        return users.stream().map(this::toResponse).toList();
     }
 
 }
