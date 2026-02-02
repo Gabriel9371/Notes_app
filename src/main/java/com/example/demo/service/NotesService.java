@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import com.example.demo.dto.NoteResponse;
+import com.example.demo.dto.NoteUpdateRequest;
 import com.example.demo.dto.NotesCreateRequest;
 import com.example.demo.exception.NoteNotFoundIdException;
 import com.example.demo.exception.UserNotFoundException;
@@ -10,6 +11,7 @@ import com.example.demo.model.Note;
 import com.example.demo.model.User;
 import com.example.demo.repository.NoteRepository;
 import com.example.demo.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -52,4 +54,33 @@ public class NotesService {
 
         return mapper.toResponse(note);
     }
+
+    @Transactional
+    public void delete(Long id){
+        Note note = noteRepository.findById(id).orElseThrow(
+                () -> new NoteNotFoundIdException(id)
+
+        );
+
+        noteRepository.deleteById(id);
+    }
+
+
+    public NoteResponse updateNote(Long id, NoteUpdateRequest dto){
+        Note note = noteRepository.findById(id).orElseThrow(
+                () -> new NoteNotFoundIdException(id)
+
+        );
+
+        note.setTitle(dto.getTitle());
+        note.setContent(dto.getContent());
+
+        noteRepository.save(note);
+
+        return mapper.toResponse(note);
+    }
+
+
+
+
 }
