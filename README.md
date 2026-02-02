@@ -41,6 +41,16 @@ POST /users <br>
 Cria um novo usuario.
 
 ---
+
+DELETE /users/{id} <br>
+Deletear usuario por id.
+
+---
+
+PUT /users/{id} <br>
+Atualizar os campos name e email do user com id passado no parametro.
+
+---
 Exemplo de request <br>
 ```json
 {
@@ -59,6 +69,14 @@ Retorna uma nota pelo ID.
 ---
 POST /notes <br>
 Cria uma nova Nota associada a um usuario.
+
+---
+DELETE /notes <br>
+Deleta uma nota pelo ID.
+
+---
+PUT /notes <br>
+Atualizar os campos `title` e `content` da nota com id passado no parametro.
 
 Exemplo de request <br>
 ```json
