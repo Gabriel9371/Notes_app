@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.dto.NoteResponse;
+import com.example.demo.dto.NoteUpdateRequest;
 import com.example.demo.dto.NotesCreateRequest;
 import com.example.demo.service.NotesService;
 import jakarta.validation.Valid;
@@ -41,5 +42,18 @@ public class NoteController {
         NoteResponse noteId = service.listById(id);
 
         return ResponseEntity.ok(noteId);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> Delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<NoteResponse> uptadeNote(@PathVariable Long id, @RequestBody @Valid NoteUpdateRequest dto){
+        NoteResponse noteUpdate = service.updateNote(id, dto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(noteUpdate);
     }
 }
